@@ -3,19 +3,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchHolidays } from "../../utils/api";
 
 import styles from "./Calendar.module.css";
+import {
+  requestHolidays,
+  selectHolidays,
+  selectWeekStartDate,
+} from "./calendarSlice";
 
 const Calendar = () => {
-  //onst count = useSelector(selectCount);
+  const holidays = useSelector(selectHolidays);
+  const weekStartDate = useSelector(selectWeekStartDate);
+
   const dispatch = useDispatch();
   const [loading, setLoading] = useState([]);
-  const [holidays, setHolidays] = useState([]);
 
   useEffect(() => {
-    fetchHolidays("2019-02-01", "2019-02-28").then((resp) => {
-      setHolidays(resp);
-      console.log(resp);
-      setLoading(false);
-    });
+    dispatch(requestHolidays("2019-02-01", "2019-02-28"));
   }, []);
 
   return (
