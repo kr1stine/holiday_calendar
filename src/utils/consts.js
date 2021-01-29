@@ -7,3 +7,5 @@ export const DaysEnum = Object.freeze({
   saturday: 5,
   sunday: 6,
 });
+
+export const MAX_DAYS_TO_REQUEST = 30;

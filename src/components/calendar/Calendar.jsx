@@ -1,5 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
+
 import {
   selectLoading,
   requestHolidays,
@@ -7,7 +9,11 @@ import {
   selectEarliestDateFetched,
   selectLatestDateFetched,
 } from "./calendarSlice";
-import { findDefaultWeekStartDate } from "utils/helpers";
+import {
+  findDefaultWeekStartDate,
+  findWeekEndDate,
+  findRequestPeriod,
+} from "utils/helpers";
 import { DaysEnum } from "utils/consts";
 
 import styles from "./Calendar.module.css";
@@ -26,14 +32,34 @@ const Calendar = () => {
     findDefaultWeekStartDate(defaultWeekStartDay)
   );
 
-  const updateHolidays = (startDate, endDate) => {
+  const updateHolidays = (displayStartDate) => {
+    const displayEndDate = findWeekEndDate(displayStartDate);
+    console.log("start ", displayStartDate);
+    console.log("week end ", displayEndDate);
+    console.log("earliest ", earliestDateFetched);
+    console.log("latest ", latestDateFetched);
+
     // Check if holidays need to be fetcehd from server
     // for the requested week
-    if (earliestDateFetched || true) {
-      // If no endDate set, fetch as far as possible
-      if (!endDate) {
-        endDate = "2019-02-28";
-      }
+    if (
+      earliestDateFetched &&
+      latestDateFetched &&
+      moment(earliestDateFetched).isSameOrBefore(displayStartDate) &
+        moment(latestDateFetched).isSameOrAfter(displayEndDate)
+    ) {
+      console.log("Ei lähe fetchima");
+      return;
+    } else {
+      console.log("Lähen fetchima");
+      // Fetch as far as possible
+
+      const { startDate, endDate } = findRequestPeriod(
+        displayStartDate,
+        displayEndDate,
+        earliestDateFetched,
+        latestDateFetched
+      );
+
       dispatch(requestHolidays(startDate, endDate));
     }
   };
