@@ -29,14 +29,11 @@ const Calendar = () => {
   const latestDateFetched = useSelector(selectLatestDateFetched);
 
   const [displayStartDay, setDisplayStartDay] = useState(DaysEnum.monday);
-  // const [displayStartDate, setDisplayStartDate] = useState(
-  //   findDefaultDisplayStartDate()
-  // );
   const [displayRange, setDisplayRange] = useState(findWeekRangeByDate());
 
   const updateHolidays = () => {
-    const displayFromDate = displayRange?.from;
-    const displayToDate = displayRange?.to;
+    const displayFromDate = displayRange?.start;
+    const displayToDate = displayRange?.end;
 
     // Check if holidays need to be fetcehd from server
     // for the requested week
@@ -67,6 +64,7 @@ const Calendar = () => {
   const handleDayChanged = (newDay) => {
     setDisplayStartDay(newDay);
     updateStartOfWeek(newDay);
+    setDisplayRange(findWeekRangeByDate(displayRange.from));
   };
 
   return (
@@ -79,13 +77,16 @@ const Calendar = () => {
             Change day {displayStartDay}
           </button>
           <section className={styles.weekGrid}>
-            <div className={styles.day}>E</div>
-            <div className={styles.day}>E</div>
-            <div className={styles.day}>E</div>
-            <div className={styles.day}>E</div>
-            <div className={styles.day}>E</div>
-            <div className={styles.day}>E</div>
-            <div className={styles.day}>E</div>
+            {displayRange.map((day) => (
+              <div className={styles.day} key={day.date}>
+                <div className={styles.header}>
+                  {day.format("ddd")}
+                  <br />
+                  {day.format("DD.MM.yyyy")}
+                </div>
+                <div className={styles.content}>holidays</div>
+              </div>
+            ))}
           </section>
         </Fragment>
       )}

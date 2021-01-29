@@ -1,24 +1,18 @@
-import moment from "moment";
+import Moment from "moment";
+import { extendMoment } from "moment-range";
 import {
   DaysEnum,
   MAX_DAYS_TO_REQUEST,
   REQUEST_DATE_FORMAT,
 } from "utils/consts";
 
-export const findDefaultDisplayStartDate = (weekStartDay = DaysEnum.monday) => {
-  return moment();
-};
+const moment = extendMoment(Moment);
 
 export const findWeekRangeByDate = (date) => {
   date = date || moment();
-  return {
-    from: moment(date).startOf("week"),
-    to: moment(date).endOf("week"),
-  };
-};
-
-export const findDisplayEndDate = (startDate, length = 7) => {
-  return moment(startDate).add(length, "days");
+  const start = moment(date).startOf("week");
+  const end = moment(date).endOf("week");
+  return Array.from(moment.range(start, end).by("day"));
 };
 
 export const findRequestPeriod = (
