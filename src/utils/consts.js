@@ -1,4 +1,4 @@
-const DaysEnum = Object.freeze({
+export const DaysEnum = Object.freeze({
   monday: 0,
   tuesday: 1,
   wednesday: 2,

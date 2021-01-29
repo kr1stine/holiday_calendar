@@ -1,24 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchHolidays } from "utils/api";
-import { findDefaultWeekStartDate, findNextDateByDay } from "utils/helpers";
-import { DaysEnum } from "utils/consts";
 
 export const calendarSlice = createSlice({
   name: "calendar",
   initialState: {
     loading: true,
     holidays: [],
-    weekStartDate: findDefaultWeekStartDate(),
-    weekStartDay: DaysEnum.monday,
     earliestDateFetched: null,
     latestDateFetched: null,
   },
   reducers: {
     setLoading: (state, action) => {
       state.loading = action.payload;
-    },
-    setWeekStartDay: (state, action) => {
-      state.weekStartDate = findNextDateByDay(action.payload);
     },
     addHolidays: (state, action) => {
       state.holidays = state.holidays.concat(action.payload);
@@ -33,7 +26,6 @@ export const calendarSlice = createSlice({
 });
 
 export const {
-  setWeekStartDay,
   addHolidays,
   setEarliestDateFetched,
   setLatestDateFetched,
@@ -49,7 +41,6 @@ export const requestHolidays = (startDate, endDate) => (dispatch) => {
 
 export const selectLoading = (state) => state.calendar.loading;
 export const selectHolidays = (state) => state.calendar.holidays;
-export const selectWeekStartDate = (state) => state.calendar.weekStartDate;
 export const selectEarliestDateFetched = (state) =>
   state.calendar.earliestDateFetched;
 export const selectLatestDateFetched = (state) =>
