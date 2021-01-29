@@ -26,8 +26,6 @@ export const findRequestPeriod = (
 
     result.startDate = moment(moment().subtract(range, "days"));
     result.endDate = moment(moment().add(range, "days"));
-    console.log("Today", moment().format(REQUEST_DATE_FORMAT));
-    console.log("result 1", result);
   } else {
     earliestDateFetched = moment(earliestDateFetched);
     latestDateFetched = moment(latestDateFetched);
@@ -48,7 +46,6 @@ export const findRequestPeriod = (
 
   result.startDate = moment(result.startDate).format(REQUEST_DATE_FORMAT);
   result.endDate = moment(result.endDate).format(REQUEST_DATE_FORMAT);
-  console.log("Resultiks sai ", result);
   return result;
 };
 

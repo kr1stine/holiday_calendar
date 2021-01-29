@@ -31,8 +31,8 @@ const Calendar = () => {
   const [displayRange, setDisplayRange] = useState(findWeekRangeByDate());
 
   const updateHolidays = () => {
-    const displayFromDate = displayRange?.start;
-    const displayToDate = displayRange?.end;
+    const displayFromDate = displayRange[0];
+    const displayToDate = displayRange[displayRange.length - 1];
 
     // Check if holidays need to be fetcehd from server
     // for the requested week
@@ -78,7 +78,11 @@ const Calendar = () => {
   useEffect(() => {
     updateHolidays();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayStartDay]);
+  }, [displayRange]);
+
+  useEffect(() => {
+    handleDayChanged(displayStartDay);
+  }, []);
 
   return (
     <Fragment>
@@ -87,12 +91,14 @@ const Calendar = () => {
       ) : (
         <Fragment>
           <div className={styles.actionBar}>
-            <button onClick={() => handleWeekChanged(-1)}>Prev</button>
-            <button onClick={() => handleWeekChanged(1)}>Next</button>
-            <DaySelector
-              selectedValue={displayStartDay}
-              onDaySelect={handleDayChanged}
-            ></DaySelector>
+            <button onClick={() => handleWeekChanged(-1)}>Previous week</button>
+            <button onClick={() => handleWeekChanged(1)}>Next week</button>
+            <span className={styles.daySelect}>
+              <DaySelector
+                selectedValue={displayStartDay}
+                onDaySelect={handleDayChanged}
+              ></DaySelector>
+            </span>
           </div>
 
           <section className={styles.weekGrid}>
