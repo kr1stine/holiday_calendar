@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchHolidays } from "../../utils/api";
-import {
-  findDefaultWeekStartDate,
-  findNextDateByDay,
-} from "../../utils/helpers";
+import { fetchHolidays } from "utils/api";
+import { findDefaultWeekStartDate, findNextDateByDay } from "utils/helpers";
 
 export const calendarSlice = createSlice({
   name: "calendar",
