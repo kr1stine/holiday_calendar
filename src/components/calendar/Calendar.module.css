@@ -32,7 +32,9 @@
   flex: 1;
   width: 100%;
   background: var(--bg-accent);
+  padding: 4px;
 }
 .content {
   flex: 2;
+  padding: 8px;
 }

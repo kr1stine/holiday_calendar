@@ -17,6 +17,7 @@ import {
 import { DaysEnum, REQUEST_DATE_FORMAT } from "utils/consts";
 
 import styles from "./Calendar.module.css";
+import DaySelector from "./daySelector/DaySelector";
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -76,9 +77,10 @@ const Calendar = () => {
         <div>Loading</div>
       ) : (
         <Fragment>
-          <button onClick={() => handleDayChanged(displayStartDay + 1)}>
-            Change day {displayStartDay}
-          </button>
+          <DaySelector
+            selectedValue={displayStartDay}
+            onDaySelect={handleDayChanged}
+          ></DaySelector>
           <section className={styles.weekGrid}>
             {displayRange.map((date, i) => (
               <div className={styles.day} key={i}>
