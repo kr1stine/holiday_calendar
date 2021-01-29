@@ -1,10 +1,6 @@
 import Moment from "moment";
 import { extendMoment } from "moment-range";
-import {
-  DaysEnum,
-  MAX_DAYS_TO_REQUEST,
-  REQUEST_DATE_FORMAT,
-} from "utils/consts";
+import { MAX_DAYS_TO_REQUEST, REQUEST_DATE_FORMAT } from "utils/consts";
 
 const moment = extendMoment(Moment);
 

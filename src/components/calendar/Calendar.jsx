@@ -10,13 +10,11 @@ import {
   selectLatestDateFetched,
 } from "./calendarSlice";
 import {
-  findDefaultDisplayStartDate,
-  findDisplayEndDate,
   findRequestPeriod,
   findWeekRangeByDate,
   updateStartOfWeek,
 } from "utils/helpers";
-import { DaysEnum } from "utils/consts";
+import { DaysEnum, REQUEST_DATE_FORMAT } from "utils/consts";
 
 import styles from "./Calendar.module.css";
 
@@ -57,9 +55,9 @@ const Calendar = () => {
     }
   };
 
-  useEffect(() => {
-    updateHolidays();
-  }, [displayStartDay]);
+  const findHolidaysByDate = (date) => {
+    return holidays[date.format(REQUEST_DATE_FORMAT)];
+  };
 
   const handleDayChanged = (newDay) => {
     setDisplayStartDay(newDay);
@@ -67,24 +65,35 @@ const Calendar = () => {
     setDisplayRange(findWeekRangeByDate(displayRange.from));
   };
 
+  useEffect(() => {
+    updateHolidays();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayStartDay]);
+
   return (
     <Fragment>
       {loading ? (
         <div>Loading</div>
       ) : (
         <Fragment>
-          <button onClick={() => handleDayChanged(DaysEnum.tuesday)}>
+          <button onClick={() => handleDayChanged(displayStartDay + 1)}>
             Change day {displayStartDay}
           </button>
           <section className={styles.weekGrid}>
-            {displayRange.map((day) => (
-              <div className={styles.day} key={day.date}>
+            {displayRange.map((date, i) => (
+              <div className={styles.day} key={i}>
                 <div className={styles.header}>
-                  {day.format("ddd")}
+                  {date.format("ddd")}
                   <br />
-                  {day.format("DD.MM.yyyy")}
+                  {date.format("DD.MM.yyyy")}
                 </div>
-                <div className={styles.content}>holidays</div>
+                <div className={styles.content}>
+                  {findHolidaysByDate(date)?.map((holiday, i) => (
+                    <div className={styles.holiday} key={i}>
+                      {holiday.name}
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </section>

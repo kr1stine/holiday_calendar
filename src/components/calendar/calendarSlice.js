@@ -14,7 +14,7 @@ export const calendarSlice = createSlice({
       state.loading = action.payload;
     },
     addHolidays: (state, action) => {
-      state.holidays = state.holidays.concat(action.payload);
+      state.holidays = { ...state.holidays, ...action.payload };
     },
     setEarliestDateFetched: (state, action) => {
       state.earliestDateFetched = action.payload;
