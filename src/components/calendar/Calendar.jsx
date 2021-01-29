@@ -18,6 +18,7 @@ import { DaysEnum, REQUEST_DATE_FORMAT } from "utils/consts";
 
 import styles from "./Calendar.module.css";
 import DaySelector from "./daySelector/DaySelector";
+import DayCard from "./dayCard/DayCard";
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -54,10 +55,6 @@ const Calendar = () => {
 
       dispatch(requestHolidays(startDate, endDate));
     }
-  };
-
-  const findHolidaysByDate = (date) => {
-    return holidays[date.format(REQUEST_DATE_FORMAT)];
   };
 
   const handleDayChanged = (newDay) => {
@@ -103,20 +100,11 @@ const Calendar = () => {
 
           <section className={styles.weekGrid}>
             {displayRange.map((date, i) => (
-              <div className={styles.day} key={i}>
-                <div className={styles.header}>
-                  {date.format("ddd")}
-                  <br />
-                  {date.format("DD.MM.yyyy")}
-                </div>
-                <div className={styles.content}>
-                  {findHolidaysByDate(date)?.map((holiday, i) => (
-                    <div className={styles.holiday} key={i}>
-                      {holiday.name}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <DayCard
+                date={date}
+                holidays={holidays[date.format(REQUEST_DATE_FORMAT)]}
+                key={i}
+              ></DayCard>
             ))}
           </section>
         </Fragment>

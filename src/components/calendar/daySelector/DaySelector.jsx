@@ -7,7 +7,7 @@ const DaySelector = ({ selectedValue, onDaySelect }) => {
   const capitalize = (string) => string[0].toUpperCase() + string.slice(1);
   return (
     <div className={styles.customSelect}>
-      <label for="day-selector">First day: </label>
+      <label htmlFor="day-selector">First day: </label>
       <select
         id="day-selector"
         defaultValue={selectedValue}
