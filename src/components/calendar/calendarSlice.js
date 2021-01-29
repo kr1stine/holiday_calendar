@@ -20,7 +20,7 @@ export const calendarSlice = createSlice({
       state.earliestDateFetched = action.payload;
     },
     setLatestDateFetched: (state, action) => {
-      state.earliestDateFetched = action.payload;
+      state.latestDateFetched = action.payload;
     },
   },
 });
@@ -35,6 +35,8 @@ export const {
 export const requestHolidays = (startDate, endDate) => (dispatch) => {
   fetchHolidays(startDate, endDate).then((resp) => {
     dispatch(addHolidays(resp.holidays));
+    dispatch(setEarliestDateFetched(startDate));
+    dispatch(setLatestDateFetched(endDate));
     dispatch(setLoading(false));
   });
 };

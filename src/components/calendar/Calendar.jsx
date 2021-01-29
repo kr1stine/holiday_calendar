@@ -10,9 +10,11 @@ import {
   selectLatestDateFetched,
 } from "./calendarSlice";
 import {
-  findDefaultWeekStartDate,
-  findWeekEndDate,
+  findDefaultDisplayStartDate,
+  findDisplayEndDate,
   findRequestPeriod,
+  findWeekRangeByDate,
+  updateStartOfWeek,
 } from "utils/helpers";
 import { DaysEnum } from "utils/consts";
 
@@ -26,36 +28,30 @@ const Calendar = () => {
   const earliestDateFetched = useSelector(selectEarliestDateFetched);
   const latestDateFetched = useSelector(selectLatestDateFetched);
 
-  const defaultWeekStartDay = DaysEnum.monday;
-  const [weekStartDay, setWeekStartDay] = useState(defaultWeekStartDay);
-  const [weekStartDate, setWeekStartDate] = useState(
-    findDefaultWeekStartDate(defaultWeekStartDay)
-  );
+  const [displayStartDay, setDisplayStartDay] = useState(DaysEnum.monday);
+  // const [displayStartDate, setDisplayStartDate] = useState(
+  //   findDefaultDisplayStartDate()
+  // );
+  const [displayRange, setDisplayRange] = useState(findWeekRangeByDate());
 
-  const updateHolidays = (displayStartDate) => {
-    const displayEndDate = findWeekEndDate(displayStartDate);
-    console.log("start ", displayStartDate);
-    console.log("week end ", displayEndDate);
-    console.log("earliest ", earliestDateFetched);
-    console.log("latest ", latestDateFetched);
+  const updateHolidays = () => {
+    const displayFromDate = displayRange?.from;
+    const displayToDate = displayRange?.to;
 
     // Check if holidays need to be fetcehd from server
     // for the requested week
     if (
       earliestDateFetched &&
       latestDateFetched &&
-      moment(earliestDateFetched).isSameOrBefore(displayStartDate) &
-        moment(latestDateFetched).isSameOrAfter(displayEndDate)
+      moment(earliestDateFetched).isSameOrBefore(moment(displayFromDate)) &
+        moment(latestDateFetched).isSameOrAfter(moment(displayToDate))
     ) {
-      console.log("Ei lähe fetchima");
       return;
     } else {
-      console.log("Lähen fetchima");
       // Fetch as far as possible
-
       const { startDate, endDate } = findRequestPeriod(
-        displayStartDate,
-        displayEndDate,
+        displayFromDate,
+        displayToDate,
         earliestDateFetched,
         latestDateFetched
       );
@@ -65,8 +61,13 @@ const Calendar = () => {
   };
 
   useEffect(() => {
-    updateHolidays(weekStartDate);
-  }, [weekStartDay]);
+    updateHolidays();
+  }, [displayStartDay]);
+
+  const handleDayChanged = (newDay) => {
+    setDisplayStartDay(newDay);
+    updateStartOfWeek(newDay);
+  };
 
   return (
     <Fragment>
@@ -74,8 +75,8 @@ const Calendar = () => {
         <div>Loading</div>
       ) : (
         <Fragment>
-          <button onClick={() => setWeekStartDay(DaysEnum.tuesday)}>
-            Change day {weekStartDay}
+          <button onClick={() => handleDayChanged(DaysEnum.tuesday)}>
+            Change day {displayStartDay}
           </button>
           <section className={styles.weekGrid}>
             <div className={styles.day}>E</div>
