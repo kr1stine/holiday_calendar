@@ -17,7 +17,7 @@ const Calendar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(requestHolidays("2019-02-01", "2019-02-28"));
+    dispatch(requestHolidays(weekStartDate));
   }, []);
 
   return (
@@ -25,15 +25,18 @@ const Calendar = () => {
       {loading ? (
         <div>Loading</div>
       ) : (
-        <section className={styles.weekGrid}>
-          <div className={styles.day}>E</div>
-          <div className={styles.day}>E</div>
-          <div className={styles.day}>E</div>
-          <div className={styles.day}>E</div>
-          <div className={styles.day}>E</div>
-          <div className={styles.day}>E</div>
-          <div className={styles.day}>E</div>
-        </section>
+        <Fragment>
+          <button>Change date</button>
+          <section className={styles.weekGrid}>
+            <div className={styles.day}>E</div>
+            <div className={styles.day}>E</div>
+            <div className={styles.day}>E</div>
+            <div className={styles.day}>E</div>
+            <div className={styles.day}>E</div>
+            <div className={styles.day}>E</div>
+            <div className={styles.day}>E</div>
+          </section>
+        </Fragment>
       )}
     </Fragment>
   );

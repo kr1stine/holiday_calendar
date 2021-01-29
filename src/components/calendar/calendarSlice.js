@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchHolidays } from "utils/api";
 import { findDefaultWeekStartDate, findNextDateByDay } from "utils/helpers";
+import { DaysEnum } from "utils/consts";
 
 export const calendarSlice = createSlice({
   name: "calendar",
@@ -8,6 +9,7 @@ export const calendarSlice = createSlice({
     loading: true,
     holidays: [],
     weekStartDate: findDefaultWeekStartDate(),
+    weekStartDay: DaysEnum.monday,
     earliestDateFetched: null,
     latestDateFetched: null,
   },
