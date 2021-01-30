@@ -2,6 +2,10 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 
+import DaySelector from "./daySelector/DaySelector";
+import DayCard from "./dayCard/DayCard";
+import WeekButton from "./weekButton/WeekButton";
+
 import {
   selectLoading,
   requestHolidays,
@@ -17,8 +21,6 @@ import {
 import { DaysEnum, REQUEST_DATE_FORMAT } from "utils/consts";
 
 import styles from "./Calendar.module.css";
-import DaySelector from "./daySelector/DaySelector";
-import DayCard from "./dayCard/DayCard";
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -88,14 +90,25 @@ const Calendar = () => {
       ) : (
         <Fragment>
           <div className={styles.actionBar}>
-            <button onClick={() => handleWeekChanged(-1)}>Previous week</button>
-            <button onClick={() => handleWeekChanged(1)}>Next week</button>
-            <span className={styles.daySelect}>
-              <DaySelector
-                selectedValue={displayStartDay}
-                onDaySelect={handleDayChanged}
-              ></DaySelector>
-            </span>
+            <div>
+              <div className={styles.title}>Estonian Holiday Calendar</div>
+              <span className={styles.daySelect}>
+                <DaySelector
+                  selectedValue={displayStartDay}
+                  onDaySelect={handleDayChanged}
+                ></DaySelector>
+              </span>
+            </div>
+            <div className={styles.buttons}>
+              <WeekButton
+                direction={"backward"}
+                onClick={() => handleWeekChanged(-1)}
+              ></WeekButton>
+              <WeekButton
+                direction={"forward"}
+                onClick={() => handleWeekChanged(1)}
+              ></WeekButton>
+            </div>
           </div>
 
           <section className={styles.weekGrid}>

@@ -7,8 +7,30 @@
 .actionBar {
   padding: 1rem 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
-.daySelect {
-  margin-left: auto;
+
+.actionBar > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.actionBar > div:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+@media (max-width: 600px) {
+  .actionBar > div:first-child {
+    display: flex;
+    flex-direction: column;
+  }
+  .title {
+    margin-bottom: 1rem;
+  }
 }

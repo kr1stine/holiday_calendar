@@ -4,6 +4,8 @@
   --bg-accent: #484a4d;
   --text-color: #dadce1;
   --border: 1px solid #474a4d;
+  --page-background: #f0f2ef;
+  background-color: var(--page-background);
 }
 
 body {
