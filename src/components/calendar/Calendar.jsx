@@ -8,6 +8,7 @@ import WeekButton from "./weekButton/WeekButton";
 
 import {
   selectLoading,
+  selectError,
   requestHolidays,
   selectHolidays,
   selectEarliestDateFetched,
@@ -21,11 +22,13 @@ import {
 import { DaysEnum, REQUEST_DATE_FORMAT } from "utils/consts";
 
 import styles from "./Calendar.module.css";
+import ErrorMessage from "./errorMessage/ErrorMessage";
 
 const Calendar = () => {
   const dispatch = useDispatch();
 
   const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
   const holidays = useSelector(selectHolidays);
   const earliestDateFetched = useSelector(selectEarliestDateFetched);
   const latestDateFetched = useSelector(selectLatestDateFetched);
@@ -87,6 +90,8 @@ const Calendar = () => {
     <Fragment>
       {loading ? (
         <div>Loading</div>
+      ) : error ? (
+        <ErrorMessage></ErrorMessage>
       ) : (
         <Fragment>
           <div className={styles.actionBar}>
