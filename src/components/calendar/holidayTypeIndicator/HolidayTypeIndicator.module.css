@@ -1,0 +1,43 @@
+.wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.indicator {
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 2px;
+  margin: 0.05rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+.indicator.public {
+  background-color: #6360ff;
+}
+.indicator.folk {
+  background-color: #ff8181;
+}
+
+.tooltip {
+  visibility: hidden;
+  display: block;
+  position: absolute;
+  width: 100px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border: var(--border);
+  color: #242526;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  bottom: 100%;
+}
+
+.wrapper:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
