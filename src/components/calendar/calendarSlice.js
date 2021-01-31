@@ -50,6 +50,8 @@ export const requestHolidays = (startDate, endDate) => (dispatch) => {
       );
     } else {
       dispatch(addHolidays(resp.holidays));
+      // Keep track of how much we have fetched
+      // To avoud double fetching
       dispatch(setEarliestDateFetched(startDate));
       dispatch(setLatestDateFetched(endDate));
     }

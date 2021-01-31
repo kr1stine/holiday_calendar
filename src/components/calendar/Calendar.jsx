@@ -5,6 +5,7 @@ import moment from "moment";
 import DaySelector from "./daySelector/DaySelector";
 import DayCard from "./dayCard/DayCard";
 import WeekButton from "./weekButton/WeekButton";
+import ErrorMessage from "./errorMessage/ErrorMessage";
 
 import {
   selectLoading,
@@ -22,7 +23,6 @@ import {
 import { DaysEnum, REQUEST_DATE_FORMAT } from "utils/consts";
 
 import styles from "./Calendar.module.css";
-import ErrorMessage from "./errorMessage/ErrorMessage";
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -33,6 +33,7 @@ const Calendar = () => {
   const earliestDateFetched = useSelector(selectEarliestDateFetched);
   const latestDateFetched = useSelector(selectLatestDateFetched);
 
+  // Stores selected first day of week
   const [displayStartDay, setDisplayStartDay] = useState(DaysEnum.monday);
   const [displayRange, setDisplayRange] = useState(findWeekRangeByDate());
 
@@ -82,6 +83,7 @@ const Calendar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayRange]);
 
+  // Call handleDayChanged on first load
   useEffect(() => {
     handleDayChanged(displayStartDay);
   }, []);

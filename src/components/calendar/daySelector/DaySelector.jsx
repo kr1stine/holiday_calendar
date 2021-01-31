@@ -3,8 +3,10 @@ import { DaysEnum } from "utils/consts";
 
 import styles from "./DaySelector.module.css";
 
+// Drodown to seelct first day of week
 const DaySelector = ({ selectedValue, onDaySelect }) => {
   const capitalize = (string) => string[0].toUpperCase() + string.slice(1);
+
   return (
     <div className={styles.customSelect}>
       <label htmlFor="day-selector">First day: </label>

@@ -4,6 +4,8 @@ import { MAX_DAYS_TO_REQUEST, REQUEST_DATE_FORMAT } from "utils/consts";
 
 const moment = extendMoment(Moment);
 
+// By provided date, find a week that contains this date
+// based on the current config of week start
 export const findWeekRangeByDate = (date) => {
   date = date || moment();
   const start = moment(date).startOf("week");
@@ -11,6 +13,9 @@ export const findWeekRangeByDate = (date) => {
   return Array.from(moment.range(start, end).by("day"));
 };
 
+// Find a period where to request holidays
+// First time: request +-15days from today
+// Other times: request +-30days based on direction
 export const findRequestPeriod = (
   displayStartDate,
   displayEndDate,

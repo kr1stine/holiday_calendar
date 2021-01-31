@@ -3,6 +3,8 @@ import HolidayTypeIndicator from "../holidayTypeIndicator/HolidayTypeIndicator";
 
 import styles from "./DayCard.module.css";
 
+// Displays date and holidays for given date
+// Input: holidays array for the given date
 const DayCard = ({ date, holidays }) => {
   return (
     <div className={styles.day}>
