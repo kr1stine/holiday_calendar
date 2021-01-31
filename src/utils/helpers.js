@@ -38,14 +38,17 @@ export const findRequestPeriod = (
     displayEndDate = moment(displayEndDate);
 
     if (earliestDateFetched.isSameOrAfter(displayStartDate)) {
-      result.startDate = earliestDateFetched.subtract(
+      result.startDate = moment(earliestDateFetched).subtract(
         MAX_DAYS_TO_REQUEST,
         "days"
       );
       result.endDate = earliestDateFetched;
     } else if (latestDateFetched.isSameOrBefore(displayEndDate)) {
-      result.startDate = displayEndDate;
-      result.endDate = latestDateFetched.add(MAX_DAYS_TO_REQUEST, "days");
+      result.endDate = moment(latestDateFetched).add(
+        MAX_DAYS_TO_REQUEST,
+        "days"
+      );
+      result.startDate = latestDateFetched;
     }
   }
 
