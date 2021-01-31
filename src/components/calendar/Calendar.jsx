@@ -83,12 +83,6 @@ const Calendar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayRange]);
 
-  // Call handleDayChanged on first load
-  useEffect(() => {
-    handleDayChanged(displayStartDay);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <Fragment>
       {loading ? (

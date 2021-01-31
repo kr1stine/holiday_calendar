@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import moment from "moment";
+
 import { fetchHolidays } from "utils/api";
 
 export const calendarSlice = createSlice({
@@ -23,10 +25,20 @@ export const calendarSlice = createSlice({
       state.holidays = { ...state.holidays, ...action.payload };
     },
     setEarliestDateFetched: (state, action) => {
-      state.earliestDateFetched = action.payload;
+      const newEarliest =
+        !state.earliestDateFetched ||
+        moment(state.earliestDateFetched).isAfter(moment(action.payload))
+          ? action.payload
+          : state.earliestDateFetched;
+      state.earliestDateFetched = newEarliest;
     },
     setLatestDateFetched: (state, action) => {
-      state.latestDateFetched = action.payload;
+      const newLatest =
+        !state.latestDateFetched ||
+        moment(state.latestDateFetched).isBefore(moment(action.payload))
+          ? action.payload
+          : state.latestDateFetched;
+      state.latestDateFetched = newLatest;
     },
   },
 });

@@ -5,6 +5,9 @@ import App from "./App";
 import store from "./redux/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
+import { updateStartOfWeek } from "utils/helpers";
+
+updateStartOfWeek(1);
 
 ReactDOM.render(
   <React.StrictMode>
