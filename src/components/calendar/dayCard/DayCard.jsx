@@ -7,7 +7,7 @@ const DayCard = ({ date, holidays }) => {
   return (
     <div className={styles.day}>
       <div className={styles.header}>
-        {date.format("ddd")}
+        <span>{date.format("ddd")}</span>
         <br />
         {date.format("DD.MM.yyyy")}
       </div>

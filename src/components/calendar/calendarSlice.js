@@ -16,8 +16,8 @@ export const calendarSlice = createSlice({
       state.loading = action.payload;
     },
     setError: (state, action) => {
-      state.error = true;
-      state.errorReason = action.payload;
+      state.error = action.payload.error;
+      state.errorReason = action.payload.errorReason || null;
     },
     addHolidays: (state, action) => {
       state.holidays = { ...state.holidays, ...action.payload };
@@ -42,7 +42,12 @@ export const {
 export const requestHolidays = (startDate, endDate) => (dispatch) => {
   fetchHolidays(startDate, endDate).then((resp) => {
     if (resp.error) {
-      dispatch(setError(resp.reason));
+      dispatch(
+        setError({
+          error: true,
+          reason: resp.reason,
+        })
+      );
     } else {
       dispatch(addHolidays(resp.holidays));
       dispatch(setEarliestDateFetched(startDate));
